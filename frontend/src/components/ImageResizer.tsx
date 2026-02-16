@@ -31,7 +31,6 @@ export default function ImageResizer() {
       setProcessedPreview("");
       setResponse(null);
 
-      // Auto-preenche dimensões
       const img = new Image();
       img.onload = () => {
         setWidth(img.width);
@@ -47,6 +46,7 @@ export default function ImageResizer() {
     maxFiles: 1,
   });
 
+  // Processar imagem
   const processImage = async () => {
     if (!originalFile) return;
 
@@ -62,20 +62,15 @@ export default function ImageResizer() {
     if (grayscale) formData.append("grayscale", "true");
 
     try {
-      // Chamada para processar a imagem
       const res = await axios.post<ImageResponse>(
         `${API_URL}/process`,
         formData,
       );
       setResponse(res.data);
 
-      // Baixar preview processado
+      // Usar diretamente o downloadUrl fornecido pelo backend
       if (res.data.success && res.data.downloadUrl) {
-        // Usa exatamente o que o backend retorna
-        const downloadUrl = res.data.downloadUrl;
-
-        const imageRes = await axios.get(downloadUrl, { responseType: "blob" });
-        setProcessedPreview(URL.createObjectURL(imageRes.data));
+        setProcessedPreview(res.data.downloadUrl);
       }
     } catch (error) {
       console.error("Erro ao processar imagem:", error);
@@ -87,10 +82,7 @@ export default function ImageResizer() {
 
   const downloadImage = () => {
     if (response?.downloadUrl) {
-      // Usa exatamente o que o backend retorna
-      const downloadUrl = res.data.downloadUrl;
-
-      window.open(downloadUrl, "_blank");
+      window.open(response.downloadUrl, "_blank");
     }
   };
 
@@ -119,7 +111,7 @@ export default function ImageResizer() {
           </p>
         </motion.div>
 
-        {/* Upload Area */}
+        {/* Upload */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -152,7 +144,7 @@ export default function ImageResizer() {
 
         {originalFile && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Configurações */}
+            {/* Controles */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -161,8 +153,8 @@ export default function ImageResizer() {
               <h2 className="text-2xl font-bold mb-6 text-gray-800">
                 ⚙️ Configurações
               </h2>
-
               <div className="space-y-6">
+                {/* Dimensões */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Largura: {width}px
@@ -176,7 +168,6 @@ export default function ImageResizer() {
                     className="w-full h-2 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Altura: {height}px
@@ -191,6 +182,7 @@ export default function ImageResizer() {
                   />
                 </div>
 
+                {/* Manter proporção */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -203,6 +195,7 @@ export default function ImageResizer() {
                   </label>
                 </div>
 
+                {/* Qualidade */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Qualidade: {quality}%
@@ -217,6 +210,7 @@ export default function ImageResizer() {
                   />
                 </div>
 
+                {/* Formato */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Formato de Saída
@@ -233,6 +227,7 @@ export default function ImageResizer() {
                   </select>
                 </div>
 
+                {/* Rotação */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Rotação
@@ -242,11 +237,7 @@ export default function ImageResizer() {
                       <button
                         key={deg}
                         onClick={() => setRotation(deg)}
-                        className={`flex-1 py-2 rounded-lg font-medium transition-all ${
-                          rotation === deg
-                            ? "bg-purple-600 text-white shadow-lg scale-105"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
+                        className={`flex-1 py-2 rounded-lg font-medium transition-all ${rotation === deg ? "bg-purple-600 text-white shadow-lg scale-105" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
                       >
                         {deg}°
                       </button>
@@ -254,6 +245,7 @@ export default function ImageResizer() {
                   </div>
                 </div>
 
+                {/* Filtros */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -264,6 +256,7 @@ export default function ImageResizer() {
                   <label className="text-sm font-medium">Preto e Branco</label>
                 </div>
 
+                {/* Botão Processar */}
                 <button
                   onClick={processImage}
                   disabled={loading}
@@ -271,7 +264,8 @@ export default function ImageResizer() {
                 >
                   {loading ? (
                     <span className="flex items-center justify-center gap-2">
-                      <span className="animate-spin">⚙️</span> Processando...
+                      <span className="animate-spin">⚙️</span>
+                      Processando...
                     </span>
                   ) : (
                     "🚀 Processar Imagem"
@@ -286,6 +280,7 @@ export default function ImageResizer() {
               animate={{ opacity: 1, x: 0 }}
               className="space-y-6"
             >
+              {/* Original */}
               <div className="bg-white rounded-2xl shadow-2xl p-6">
                 <h3 className="text-lg font-bold mb-4 text-gray-800">
                   📸 Original
@@ -309,6 +304,7 @@ export default function ImageResizer() {
                 )}
               </div>
 
+              {/* Processada */}
               <AnimatePresence>
                 {processedPreview && response?.success && (
                   <motion.div
