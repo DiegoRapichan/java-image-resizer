@@ -15,9 +15,8 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
-                            "http://localhost:3000",
-                            "http://localhost:3002",
-                            "https://java-image-resizer.vercel.app"
+                            "http://localhost:3000",                     // frontend local
+                            "https://java-image-resizer.vercel.app"      // frontend produção
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
