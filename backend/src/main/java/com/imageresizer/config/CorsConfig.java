@@ -13,10 +13,10 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
+                registry.addMapping("/**") // Permite CORS em todas as rotas
                         .allowedOrigins(
-                            "http://localhost:3000",                     // frontend local
-                            "https://java-image-resizer.vercel.app"      // frontend produção
+                            "http://localhost:3000",                  // Frontend local
+                            "https://java-image-resizer.vercel.app"  // Frontend produção
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
