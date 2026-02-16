@@ -31,6 +31,7 @@ export default function ImageResizer() {
       setProcessedPreview("");
       setResponse(null);
 
+      // Auto-preenche dimensões
       const img = new Image();
       img.onload = () => {
         setWidth(img.width);
@@ -68,12 +69,12 @@ export default function ImageResizer() {
       );
       setResponse(res.data);
 
+      // Usa URL completa para a imagem processada
       if (res.data.success && res.data.downloadUrl) {
-        // Ajusta URL completa ou relativa
-        const downloadPath = res.data.downloadUrl.startsWith("http")
+        const fullUrl = res.data.downloadUrl.startsWith("http")
           ? res.data.downloadUrl
-          : `${API_URL}${res.data.downloadUrl.replace(/^\/?api\/images/, "/api/images")}`;
-        setProcessedPreview(downloadPath);
+          : `${API_URL}${res.data.downloadUrl}`;
+        setProcessedPreview(fullUrl);
       }
     } catch (error) {
       console.error("Erro ao processar imagem:", error);
@@ -85,10 +86,10 @@ export default function ImageResizer() {
 
   const downloadImage = () => {
     if (response?.downloadUrl) {
-      const downloadPath = response.downloadUrl.startsWith("http")
+      const fullUrl = response.downloadUrl.startsWith("http")
         ? response.downloadUrl
-        : `${API_URL}${response.downloadUrl.replace(/^\/?api\/images/, "/api/images")}`;
-      window.open(downloadPath, "_blank");
+        : `${API_URL}${response.downloadUrl}`;
+      window.open(fullUrl, "_blank");
     }
   };
 
@@ -159,7 +160,9 @@ export default function ImageResizer() {
               <h2 className="text-2xl font-bold mb-6 text-gray-800">
                 ⚙️ Configurações
               </h2>
+
               <div className="space-y-6">
+                {/* Dimensões */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Largura: {width}px
@@ -186,6 +189,8 @@ export default function ImageResizer() {
                     className="w-full h-2 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
+
+                {/* Manter proporção */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -197,6 +202,8 @@ export default function ImageResizer() {
                     Manter proporção
                   </label>
                 </div>
+
+                {/* Qualidade */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Qualidade: {quality}%
@@ -210,6 +217,8 @@ export default function ImageResizer() {
                     className="w-full h-2 bg-gradient-to-r from-green-200 to-blue-200 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
+
+                {/* Formato */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Formato de Saída
@@ -225,6 +234,8 @@ export default function ImageResizer() {
                     <option value="gif">GIF</option>
                   </select>
                 </div>
+
+                {/* Rotação */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Rotação
@@ -245,6 +256,8 @@ export default function ImageResizer() {
                     ))}
                   </div>
                 </div>
+
+                {/* Filtros */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -254,6 +267,8 @@ export default function ImageResizer() {
                   />
                   <label className="text-sm font-medium">Preto e Branco</label>
                 </div>
+
+                {/* Botão Processar */}
                 <button
                   onClick={processImage}
                   disabled={loading}
@@ -315,7 +330,7 @@ export default function ImageResizer() {
                     <div className="relative aspect-video bg-gray-100 rounded-xl overflow-hidden">
                       <img
                         src={processedPreview}
-                        alt="Processed"
+                        alt="Processada"
                         className="w-full h-full object-contain"
                       />
                     </div>
