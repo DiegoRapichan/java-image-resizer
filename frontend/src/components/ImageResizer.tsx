@@ -13,7 +13,6 @@ export default function ImageResizer() {
   const [response, setResponse] = useState<ImageResponse | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Opções
   const [width, setWidth] = useState<number>(800);
   const [height, setHeight] = useState<number>(600);
   const [quality, setQuality] = useState<number>(85);
@@ -31,7 +30,6 @@ export default function ImageResizer() {
       setProcessedPreview("");
       setResponse(null);
 
-      // Auto-preenche dimensões
       const img = new Image();
       img.onload = () => {
         setWidth(img.width);
@@ -67,9 +65,10 @@ export default function ImageResizer() {
         `${API_URL}/process`,
         formData,
       );
+
       setResponse(res.data);
 
-      // Usa URL completa para a imagem processada
+      // ✅ Corrigido: não duplicar /api/images
       if (res.data.success && res.data.downloadUrl) {
         const fullUrl = res.data.downloadUrl.startsWith("http")
           ? res.data.downloadUrl
@@ -118,7 +117,7 @@ export default function ImageResizer() {
           </p>
         </motion.div>
 
-        {/* Upload */}
+        {/* Upload Area */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -151,7 +150,7 @@ export default function ImageResizer() {
 
         {originalFile && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Controles */}
+            {/* Configurações */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -160,7 +159,6 @@ export default function ImageResizer() {
               <h2 className="text-2xl font-bold mb-6 text-gray-800">
                 ⚙️ Configurações
               </h2>
-
               <div className="space-y-6">
                 {/* Dimensões */}
                 <div>
@@ -257,7 +255,7 @@ export default function ImageResizer() {
                   </div>
                 </div>
 
-                {/* Filtros */}
+                {/* Filtro */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
