@@ -8,7 +8,7 @@ Sistema completo para redimensionamento, otimização e transformação de image
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-**🌐 [Demo ao Vivo](#)**  | **⚡ [Quick Start](QUICK_START.md)**
+**🌐 [Demo ao Vivo](#)** | **⚡ [Quick Start](QUICK_START.md)**
 
 ---
 
@@ -17,6 +17,7 @@ Sistema completo para redimensionamento, otimização e transformação de image
 API REST profissional para processamento de imagens com interface web moderna e interativa. Desenvolvido com foco em performance, qualidade e experiência do usuário.
 
 **Principais características:**
+
 - 🎨 **Interface Premium** - React com Drag & Drop, sliders interativos e preview em tempo real
 - ⚡ **Processamento Rápido** - Thumbnailator + imgscalr para máxima qualidade
 - 🔄 **Múltiplas Operações** - Resize, crop, rotate, flip, filtros e mais
@@ -30,16 +31,16 @@ API REST profissional para processamento de imagens com interface web moderna e 
 
 ### 🖼️ Operações de Imagem
 
-| Operação | Descrição | Status |
-|----------|-----------|--------|
-| **Redimensionar** | Por dimensões (px) ou porcentagem | ✅ |
-| **Manter Proporção** | Aspect ratio automático | ✅ |
-| **Qualidade JPEG** | Controle 1-100% | ✅ |
-| **Converter Formato** | PNG, JPG, WebP, GIF, BMP | ✅ |
-| **Rotação** | 90°, 180°, 270° | ✅ |
-| **Espelhar** | Horizontal e Vertical | ✅ |
-| **Preto e Branco** | Conversão grayscale | ✅ |
-| **Recorte (Crop)** | Coordenadas personalizadas | ✅ |
+| Operação              | Descrição                         | Status |
+| --------------------- | --------------------------------- | ------ |
+| **Redimensionar**     | Por dimensões (px) ou porcentagem | ✅     |
+| **Manter Proporção**  | Aspect ratio automático           | ✅     |
+| **Qualidade JPEG**    | Controle 1-100%                   | ✅     |
+| **Converter Formato** | PNG, JPG, WebP, GIF, BMP          | ✅     |
+| **Rotação**           | 90°, 180°, 270°                   | ✅     |
+| **Espelhar**          | Horizontal e Vertical             | ✅     |
+| **Preto e Branco**    | Conversão grayscale               | ✅     |
+| **Recorte (Crop)**    | Coordenadas personalizadas        | ✅     |
 
 ### 🎨 Interface Moderna (FIRULAS!)
 
@@ -65,26 +66,28 @@ API REST profissional para processamento de imagens com interface web moderna e 
 ## 🚀 Tecnologias
 
 ### Backend
-| Tecnologia | Versão | Uso |
-|-----------|--------|-----|
-| **Java** | 17 | Linguagem de programação |
-| **Spring Boot** | 3.2.2 | Framework backend |
-| **Thumbnailator** | 0.4.20 | Processamento de imagens (fácil) |
-| **imgscalr** | 4.2 | Alta qualidade (algoritmos profissionais) |
-| **WebP ImageIO** | 0.1.6 | Suporte WebP |
-| **SpringDoc OpenAPI** | 2.3.0 | Documentação Swagger |
-| **Lombok** | - | Redução de boilerplate |
+
+| Tecnologia            | Versão | Uso                                       |
+| --------------------- | ------ | ----------------------------------------- |
+| **Java**              | 17     | Linguagem de programação                  |
+| **Spring Boot**       | 3.2.2  | Framework backend                         |
+| **Thumbnailator**     | 0.4.20 | Processamento de imagens (fácil)          |
+| **imgscalr**          | 4.2    | Alta qualidade (algoritmos profissionais) |
+| **WebP ImageIO**      | 0.1.6  | Suporte WebP                              |
+| **SpringDoc OpenAPI** | 2.3.0  | Documentação Swagger                      |
+| **Lombok**            | -      | Redução de boilerplate                    |
 
 ### Frontend
-| Tecnologia | Versão | Uso |
-|-----------|--------|-----|
-| **React** | 18 | Biblioteca UI |
-| **TypeScript** | 5.3 | Type safety |
-| **Vite** | 5.0 | Build tool moderna |
-| **Tailwind CSS** | 3.4 | Estilização utility-first |
-| **Framer Motion** | 11.0 | Animações suaves |
-| **React Dropzone** | 14.2 | Drag & drop de arquivos |
-| **Axios** | 1.6 | Cliente HTTP |
+
+| Tecnologia         | Versão | Uso                       |
+| ------------------ | ------ | ------------------------- |
+| **React**          | 18     | Biblioteca UI             |
+| **TypeScript**     | 5.3    | Type safety               |
+| **Vite**           | 5.0    | Build tool moderna        |
+| **Tailwind CSS**   | 3.4    | Estilização utility-first |
+| **Framer Motion**  | 11.0   | Animações suaves          |
+| **React Dropzone** | 14.2   | Drag & drop de arquivos   |
+| **Axios**          | 1.6    | Cliente HTTP              |
 
 ---
 
@@ -145,26 +148,31 @@ npm -v           # npm 9+
 ### Quick Start
 
 #### 1️⃣ Clone o repositório
+
 ```bash
 git clone https://github.com/DiegoRapichan/image-resizer.git
 cd image-resizer
 ```
 
 #### 2️⃣ Backend (Terminal 1)
+
 ```bash
 cd backend
 ./mvnw clean install -DskipTests
 ./mvnw spring-boot:run
 ```
+
 ✅ Backend: `http://localhost:8080`  
 📚 Swagger: `http://localhost:8080/swagger-ui.html`
 
 #### 3️⃣ Frontend (Terminal 2)
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
 ✅ Frontend: `http://localhost:3000`
 
 ---
@@ -172,6 +180,7 @@ npm run dev
 ## 📚 Endpoints da API
 
 ### Base URL
+
 ```
 http://localhost:8080/api/images
 ```
@@ -179,6 +188,7 @@ http://localhost:8080/api/images
 ### Endpoints Disponíveis
 
 #### 🔄 Processar Imagem
+
 ```http
 POST /process
 Content-Type: multipart/form-data
@@ -199,6 +209,7 @@ Parameters:
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -217,11 +228,13 @@ Parameters:
 ```
 
 #### ⬇️ Download
+
 ```http
 GET /download/{fileName}
 ```
 
 #### 🏥 Health Check
+
 ```http
 GET /health
 ```
@@ -239,6 +252,7 @@ Swagger UI: `http://localhost:8080/swagger-ui.html`
 **Input:** `photo.jpg` (4000x3000, 5MB)
 
 **Request:**
+
 ```bash
 curl -X POST http://localhost:8080/api/images/process \
   -F "file=@photo.jpg" \
@@ -254,6 +268,7 @@ curl -X POST http://localhost:8080/api/images/process \
 ### Exemplo 2: Converter para WebP + Grayscale
 
 **Request:**
+
 ```bash
 curl -X POST http://localhost:8080/api/images/process \
   -F "file=@photo.jpg" \
@@ -267,6 +282,7 @@ curl -X POST http://localhost:8080/api/images/process \
 ### Exemplo 3: Rotação + Redimensionar 50%
 
 **Request:**
+
 ```bash
 curl -X POST http://localhost:8080/api/images/process \
   -F "file=@photo.jpg" \
@@ -323,26 +339,27 @@ image-resizer/
 ## 🎨 Screenshots
 
 - **Página Principal**  
-  ![Página Principal](/screenshots/image-resize-home.PNG)  
+  ![Página Principal](/screenshots/image-resize-home.PNG)
 
 - **Upload de Imagem**  
-  ![Upload de Imagem](/screenshots/image-resize-upload.PNG)  
+  ![Upload de Imagem](/screenshots/image-resize-upload.PNG)
 
 - **Resultado Processado**  
-  ![Resultado Processado](/screenshots/image-resize-result.PNG)  
-
+  ![Resultado Processado](/screenshots/image-resize-result.PNG)
 
 ---
 
 ## 🧪 Testes
 
 ### Backend
+
 ```bash
 cd backend
 ./mvnw test
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 npm test
@@ -353,6 +370,7 @@ npm test
 ## 🚀 Deploy
 
 ### Backend - Railway/Heroku
+
 ```bash
 # Railway
 railway up
@@ -363,6 +381,7 @@ git push heroku main
 ```
 
 ### Frontend - Vercel/Netlify
+
 ```bash
 # Vercel
 cd frontend
@@ -393,7 +412,7 @@ netlify deploy --prod --dir=dist
 
 ## 🤝 Contribuindo
 
-Contribuições são bem-vindas! 
+Contribuições são bem-vindas!
 
 1. Fork o projeto
 2. Crie uma branch: `git checkout -b feature/NovaFeature`
@@ -425,10 +444,8 @@ Desenvolvedor Full Stack especializado em Java/Spring Boot e React.
 
 - 🔄 [**File Converter API**](https://github.com/DiegoRapichan/java-file-converter) - Java + Spring + Angular  
   Sistema de conversão entre 7 formatos (CSV, JSON, XML, Excel, PDF)
-  
 - 🏭 [**Autoflex Inventory System**](https://github.com/DiegoRapichan/autoflex-inventory-system) - Spring + React + PostgreSQL  
   Sistema de gestão de estoque com sugestão inteligente de produção
-  
 - 📝 [**Task Manager API**](https://github.com/DiegoRapichan/task-manager-api) - Node.js + Express  
   API REST para gerenciamento de tarefas com JWT
 
@@ -474,7 +491,7 @@ Encontrou um bug? Tem uma sugestão?
 
 **⭐ Se este projeto foi útil, considere dar uma estrela!**
 
-**Desenvolvido  por [Diego Rapichan](https://github.com/DiegoRapichan)**
+**Desenvolvido por [Diego Rapichan](https://github.com/DiegoRapichan)**
 
 [⬆ Voltar ao topo](#-image-resizer--optimizer-pro)
 
