@@ -8,7 +8,7 @@ Sistema completo para redimensionamento, otimização e transformação de image
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-**🌐 [Demo ao Vivo](#)** | **📖 [Documentação Completa](DOCUMENTATION.md)** | **⚡ [Quick Start](QUICK_START.md)**
+**🌐 [Demo ao Vivo](#)**  | **⚡ [Quick Start](QUICK_START.md)**
 
 ---
 
@@ -322,14 +322,15 @@ image-resizer/
 
 ## 🎨 Screenshots
 
-### Interface Principal - Drag & Drop
-*Preview da interface moderna com gradientes e animações*
+- **Página Principal**  
+  ![Página Principal](/screenshots/image-resize-home.PNG)  
 
-### Sliders Interativos
-*Ajuste de dimensões em tempo real com feedback visual*
+- **Upload de Imagem**  
+  ![Upload de Imagem](/screenshots/image-resize-upload.PNG)  
 
-### Comparação Antes/Depois
-*Preview lado a lado mostrando estatísticas de economia*
+- **Resultado Processado**  
+  ![Resultado Processado](/screenshots/image-resize-result.PNG)  
+
 
 ---
 
@@ -463,8 +464,8 @@ of this software and associated documentation files...
 
 Encontrou um bug? Tem uma sugestão?
 
-- 🐛 [Abra uma issue](https://github.com/DiegoRapichan/image-resizer/issues)
-- 💬 [Inicie uma discussão](https://github.com/DiegoRapichan/image-resizer/discussions)
+- 🐛 [Abra uma issue](https://github.com/DiegoRapichan/java-image-resizer/issues)
+- 💬 [Inicie uma discussão](https://github.com/DiegoRapichan/java-image-resizer/discussions)
 - 📧 Email: direrapichan@gmail.com
 
 ---
@@ -473,7 +474,7 @@ Encontrou um bug? Tem uma sugestão?
 
 **⭐ Se este projeto foi útil, considere dar uma estrela!**
 
-**Desenvolvido com ❤️ por [Diego Rapichan](https://github.com/DiegoRapichan)**
+**Desenvolvido  por [Diego Rapichan](https://github.com/DiegoRapichan)**
 
 [⬆ Voltar ao topo](#-image-resizer--optimizer-pro)
 
