@@ -71,9 +71,9 @@ export default function ImageResizer() {
 
       // Baixar preview processado
       if (res.data.success && res.data.downloadUrl) {
-        const downloadUrl = res.data.downloadUrl.startsWith("http")
-          ? res.data.downloadUrl
-          : `${API_URL}${res.data.downloadUrl}`;
+        // Usa exatamente o que o backend retorna
+        const downloadUrl = res.data.downloadUrl;
+
         const imageRes = await axios.get(downloadUrl, { responseType: "blob" });
         setProcessedPreview(URL.createObjectURL(imageRes.data));
       }
@@ -87,9 +87,9 @@ export default function ImageResizer() {
 
   const downloadImage = () => {
     if (response?.downloadUrl) {
-      const downloadUrl = response.downloadUrl.startsWith("http")
-        ? response.downloadUrl
-        : `${API_URL}${response.downloadUrl}`;
+      // Usa exatamente o que o backend retorna
+      const downloadUrl = res.data.downloadUrl;
+
       window.open(downloadUrl, "_blank");
     }
   };
