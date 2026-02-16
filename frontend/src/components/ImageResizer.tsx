@@ -62,20 +62,23 @@ export default function ImageResizer() {
     if (grayscale) formData.append("grayscale", "true");
 
     try {
+      // Chamada para processar a imagem
       const res = await axios.post<ImageResponse>(
         `${API_URL}/process`,
         formData,
       );
       setResponse(res.data);
 
+      // Baixar preview processado
       if (res.data.success && res.data.downloadUrl) {
-        const imageRes = await axios.get(res.data.downloadUrl, {
-          responseType: "blob",
-        });
+        const downloadUrl = res.data.downloadUrl.startsWith("http")
+          ? res.data.downloadUrl
+          : `${API_URL}${res.data.downloadUrl}`;
+        const imageRes = await axios.get(downloadUrl, { responseType: "blob" });
         setProcessedPreview(URL.createObjectURL(imageRes.data));
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Erro ao processar imagem:", error);
       alert("Erro ao processar imagem");
     } finally {
       setLoading(false);
@@ -84,7 +87,10 @@ export default function ImageResizer() {
 
   const downloadImage = () => {
     if (response?.downloadUrl) {
-      window.open(response.downloadUrl, "_blank");
+      const downloadUrl = response.downloadUrl.startsWith("http")
+        ? response.downloadUrl
+        : `${API_URL}${response.downloadUrl}`;
+      window.open(downloadUrl, "_blank");
     }
   };
 
@@ -146,7 +152,7 @@ export default function ImageResizer() {
 
         {originalFile && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Controles */}
+            {/* Configurações */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -265,8 +271,7 @@ export default function ImageResizer() {
                 >
                   {loading ? (
                     <span className="flex items-center justify-center gap-2">
-                      <span className="animate-spin">⚙️</span>
-                      Processando...
+                      <span className="animate-spin">⚙️</span> Processando...
                     </span>
                   ) : (
                     "🚀 Processar Imagem"
@@ -326,8 +331,7 @@ export default function ImageResizer() {
                       <div className="text-sm text-gray-600 space-y-1">
                         <p>
                           📐 {response.processedWidth} x{" "}
-                          {response.processedHeight}
-                          px
+                          {response.processedHeight}px
                         </p>
                         <p>
                           💾 {formatBytes(response.processedSizeBytes || 0)}
