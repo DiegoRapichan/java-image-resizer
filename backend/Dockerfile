@@ -1,18 +1,23 @@
-# Use uma imagem base do OpenJDK 17
-FROM eclipse-temurin:17-jdk-alpine
-
-# Diretório de trabalho
+# Etapa de build
+FROM maven:3.9.3-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copia pom.xml e o código
+# Copia o pom e as fontes
 COPY pom.xml .
 COPY src ./src
 
-# Compila o projeto
-RUN ./mvnw clean package -DskipTests
+# Build do projeto (ignora testes)
+RUN mvn clean package -DskipTests
 
-# Expõe a porta que o Spring Boot usa
+# Etapa de runtime
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+
+# Copia o jar gerado na etapa de build
+COPY --from=build /app/target/*.jar app.jar
+
+# Expõe porta
 EXPOSE 8080
 
-# Comando para rodar a aplicação
-CMD ["java", "-jar", "target/image-resizer-api-1.0.0.jar"]
+# Comando para rodar
+ENTRYPOINT ["java","-jar","app.jar"]
