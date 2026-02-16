@@ -8,7 +8,8 @@ Sistema completo para redimensionamento, otimização e transformação de image
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-**🌐 [Demo ao Vivo](#)** | **⚡ [Quick Start](QUICK_START.md)**
+**🌐 [Demo ao Vivo](https://java-image-resizer.vercel.app/)** | **⚡ [Quick Start](QUICK_START.md)**
+
 
 ---
 
@@ -388,9 +389,6 @@ cd frontend
 npm run build
 vercel --prod
 
-# Netlify
-npm run build
-netlify deploy --prod --dir=dist
 ```
 
 ---
