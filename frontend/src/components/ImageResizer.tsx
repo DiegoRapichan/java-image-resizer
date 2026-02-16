@@ -1,18 +1,18 @@
-import React, { useState, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ImageResponse } from '../types';
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
+import { ImageResponse } from "../types";
 
-const API_URL = 'http://localhost:8080/api/images';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function ImageResizer() {
   const [originalFile, setOriginalFile] = useState<File | null>(null);
-  const [originalPreview, setOriginalPreview] = useState<string>('');
-  const [processedPreview, setProcessedPreview] = useState<string>('');
+  const [originalPreview, setOriginalPreview] = useState<string>("");
+  const [processedPreview, setProcessedPreview] = useState<string>("");
   const [response, setResponse] = useState<ImageResponse | null>(null);
   const [loading, setLoading] = useState(false);
-  
+
   // Opções
   const [width, setWidth] = useState<number>(800);
   const [height, setHeight] = useState<number>(600);
@@ -20,7 +20,7 @@ export default function ImageResizer() {
   const [keepRatio, setKeepRatio] = useState(true);
   const [rotation, setRotation] = useState<number>(0);
   const [grayscale, setGrayscale] = useState(false);
-  const [format, setFormat] = useState<string>('jpg');
+  const [format, setFormat] = useState<string>("jpg");
 
   // Drag & Drop
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -28,9 +28,9 @@ export default function ImageResizer() {
     if (file) {
       setOriginalFile(file);
       setOriginalPreview(URL.createObjectURL(file));
-      setProcessedPreview('');
+      setProcessedPreview("");
       setResponse(null);
-      
+
       // Auto-preenche dimensões
       const img = new Image();
       img.onload = () => {
@@ -43,8 +43,8 @@ export default function ImageResizer() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp'] },
-    maxFiles: 1
+    accept: { "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"] },
+    maxFiles: 1,
   });
 
   const processImage = async () => {
@@ -52,28 +52,34 @@ export default function ImageResizer() {
 
     setLoading(true);
     const formData = new FormData();
-    formData.append('file', originalFile);
-    formData.append('width', width.toString());
-    formData.append('height', height.toString());
-    formData.append('keepAspectRatio', keepRatio.toString());
-    formData.append('quality', quality.toString());
-    formData.append('outputFormat', format);
-    if (rotation !== 0) formData.append('rotation', rotation.toString());
-    if (grayscale) formData.append('grayscale', 'true');
+    formData.append("file", originalFile);
+    formData.append("width", width.toString());
+    formData.append("height", height.toString());
+    formData.append("keepAspectRatio", keepRatio.toString());
+    formData.append("quality", quality.toString());
+    formData.append("outputFormat", format);
+    if (rotation !== 0) formData.append("rotation", rotation.toString());
+    if (grayscale) formData.append("grayscale", "true");
 
     try {
-      const res = await axios.post<ImageResponse>(`${API_URL}/process`, formData);
+      const res = await axios.post<ImageResponse>(
+        `${API_URL}/process`,
+        formData,
+      );
       setResponse(res.data);
-      
+
       if (res.data.success && res.data.downloadUrl) {
-        const imageRes = await axios.get(`${API_URL}${res.data.downloadUrl.replace('/api/images', '')}`, {
-          responseType: 'blob'
-        });
+        const imageRes = await axios.get(
+          `${API_URL}${res.data.downloadUrl.replace("/api/images", "")}`,
+          {
+            responseType: "blob",
+          },
+        );
         setProcessedPreview(URL.createObjectURL(imageRes.data));
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Erro ao processar imagem');
+      console.error("Error:", error);
+      alert("Erro ao processar imagem");
     } finally {
       setLoading(false);
     }
@@ -81,23 +87,26 @@ export default function ImageResizer() {
 
   const downloadImage = () => {
     if (response?.downloadUrl) {
-      window.open(`${API_URL}${response.downloadUrl.replace('/api/images', '')}`, '_blank');
+      window.open(
+        `${API_URL}${response.downloadUrl.replace("/api/images", "")}`,
+        "_blank",
+      );
     }
   };
 
   const formatBytes = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB'];
+    const sizes = ["Bytes", "KB", "MB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
@@ -105,7 +114,9 @@ export default function ImageResizer() {
           <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             📷 Image Resizer Pro
           </h1>
-          <p className="text-xl text-gray-600">Redimensione, otimize e transforme suas imagens</p>
+          <p className="text-xl text-gray-600">
+            Redimensione, otimize e transforme suas imagens
+          </p>
         </motion.div>
 
         {/* Upload Area com Drag & Drop */}
@@ -117,18 +128,22 @@ export default function ImageResizer() {
           <div
             {...getRootProps()}
             className={`border-4 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 mb-8 ${
-              isDragActive 
-                ? 'border-purple-500 bg-purple-50 scale-105' 
-                : 'border-gray-300 hover:border-purple-400 hover:bg-white'
+              isDragActive
+                ? "border-purple-500 bg-purple-50 scale-105"
+                : "border-gray-300 hover:border-purple-400 hover:bg-white"
             }`}
           >
             <input {...getInputProps()} />
             <div className="text-6xl mb-4">🖼️</div>
             {isDragActive ? (
-              <p className="text-2xl font-semibold text-purple-600">Solte a imagem aqui!</p>
+              <p className="text-2xl font-semibold text-purple-600">
+                Solte a imagem aqui!
+              </p>
             ) : (
               <>
-                <p className="text-xl font-semibold mb-2">Arraste e solte uma imagem</p>
+                <p className="text-xl font-semibold mb-2">
+                  Arraste e solte uma imagem
+                </p>
                 <p className="text-gray-500">ou clique para selecionar</p>
               </>
             )}
@@ -143,8 +158,10 @@ export default function ImageResizer() {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-2xl shadow-2xl p-8"
             >
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">⚙️ Configurações</h2>
-              
+              <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                ⚙️ Configurações
+              </h2>
+
               {/* Dimensões */}
               <div className="space-y-6">
                 <div>
@@ -182,7 +199,9 @@ export default function ImageResizer() {
                     onChange={(e) => setKeepRatio(e.target.checked)}
                     className="w-5 h-5 text-purple-600 rounded"
                   />
-                  <label className="text-sm font-medium">Manter proporção</label>
+                  <label className="text-sm font-medium">
+                    Manter proporção
+                  </label>
                 </div>
 
                 {/* Qualidade */}
@@ -202,7 +221,9 @@ export default function ImageResizer() {
 
                 {/* Formato */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Formato de Saída</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Formato de Saída
+                  </label>
                   <select
                     value={format}
                     onChange={(e) => setFormat(e.target.value)}
@@ -217,7 +238,9 @@ export default function ImageResizer() {
 
                 {/* Rotação */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Rotação</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Rotação
+                  </label>
                   <div className="flex gap-2">
                     {[0, 90, 180, 270].map((deg) => (
                       <button
@@ -225,8 +248,8 @@ export default function ImageResizer() {
                         onClick={() => setRotation(deg)}
                         className={`flex-1 py-2 rounded-lg font-medium transition-all ${
                           rotation === deg
-                            ? 'bg-purple-600 text-white shadow-lg scale-105'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            ? "bg-purple-600 text-white shadow-lg scale-105"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                         }`}
                       >
                         {deg}°
@@ -258,7 +281,7 @@ export default function ImageResizer() {
                       Processando...
                     </span>
                   ) : (
-                    '🚀 Processar Imagem'
+                    "🚀 Processar Imagem"
                   )}
                 </button>
               </div>
@@ -272,7 +295,9 @@ export default function ImageResizer() {
             >
               {/* Original */}
               <div className="bg-white rounded-2xl shadow-2xl p-6">
-                <h3 className="text-lg font-bold mb-4 text-gray-800">📸 Original</h3>
+                <h3 className="text-lg font-bold mb-4 text-gray-800">
+                  📸 Original
+                </h3>
                 <div className="relative aspect-video bg-gray-100 rounded-xl overflow-hidden">
                   {originalPreview && (
                     <img
@@ -284,7 +309,9 @@ export default function ImageResizer() {
                 </div>
                 {response && (
                   <div className="mt-4 text-sm text-gray-600 space-y-1">
-                    <p>📐 {response.originalWidth} x {response.originalHeight}px</p>
+                    <p>
+                      📐 {response.originalWidth} x {response.originalHeight}px
+                    </p>
                     <p>💾 {formatBytes(response.originalSizeBytes || 0)}</p>
                   </div>
                 )}
@@ -299,7 +326,9 @@ export default function ImageResizer() {
                     exit={{ opacity: 0, y: -20 }}
                     className="bg-white rounded-2xl shadow-2xl p-6"
                   >
-                    <h3 className="text-lg font-bold mb-4 text-green-600">✅ Processada</h3>
+                    <h3 className="text-lg font-bold mb-4 text-green-600">
+                      ✅ Processada
+                    </h3>
                     <div className="relative aspect-video bg-gray-100 rounded-xl overflow-hidden">
                       <img
                         src={processedPreview}
@@ -309,8 +338,13 @@ export default function ImageResizer() {
                     </div>
                     <div className="mt-4 space-y-2">
                       <div className="text-sm text-gray-600 space-y-1">
-                        <p>📐 {response.processedWidth} x {response.processedHeight}px</p>
-                        <p>💾 {formatBytes(response.processedSizeBytes || 0)}</p>
+                        <p>
+                          📐 {response.processedWidth} x{" "}
+                          {response.processedHeight}px
+                        </p>
+                        <p>
+                          💾 {formatBytes(response.processedSizeBytes || 0)}
+                        </p>
                         <p className="font-bold text-green-600">
                           💰 Economia: {response.compressionRatio?.toFixed(1)}%
                         </p>
