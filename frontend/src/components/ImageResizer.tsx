@@ -109,8 +109,11 @@ export default function ImageResizer() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            📷 Image Resizer Pro
+          <h1 className="text-6xl font-bold mb-4 flex items-center justify-center gap-3">
+            <span className="text-6xl">📷</span>
+            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Image Resizer Pro
+            </span>
           </h1>
           <p className="text-xl text-gray-600">
             Redimensione, otimize e transforme suas imagens
