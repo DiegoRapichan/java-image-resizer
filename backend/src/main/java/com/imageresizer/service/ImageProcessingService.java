@@ -79,7 +79,7 @@ public class ImageProcessingService {
                     .processedHeight(processedImage.getHeight())
                     .processedSizeBytes(processedSize)
                     .compressionRatio(compressionRatio)
-                    .downloadUrl("/api/images/download/" + outputFileName)
+                    .downloadUrl("/download/" + outputFileName)  
                     .build();
                     
         } catch (Exception e) {
