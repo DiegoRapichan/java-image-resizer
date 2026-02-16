@@ -68,9 +68,12 @@ export default function ImageResizer() {
       );
       setResponse(res.data);
 
-      // Usar diretamente o downloadUrl fornecido pelo backend
       if (res.data.success && res.data.downloadUrl) {
-        setProcessedPreview(res.data.downloadUrl);
+        // Ajusta URL completa ou relativa
+        const downloadPath = res.data.downloadUrl.startsWith("http")
+          ? res.data.downloadUrl
+          : `${API_URL}${res.data.downloadUrl.replace(/^\/?api\/images/, "/api/images")}`;
+        setProcessedPreview(downloadPath);
       }
     } catch (error) {
       console.error("Erro ao processar imagem:", error);
@@ -82,7 +85,10 @@ export default function ImageResizer() {
 
   const downloadImage = () => {
     if (response?.downloadUrl) {
-      window.open(response.downloadUrl, "_blank");
+      const downloadPath = response.downloadUrl.startsWith("http")
+        ? response.downloadUrl
+        : `${API_URL}${response.downloadUrl.replace(/^\/?api\/images/, "/api/images")}`;
+      window.open(downloadPath, "_blank");
     }
   };
 
@@ -154,7 +160,6 @@ export default function ImageResizer() {
                 ⚙️ Configurações
               </h2>
               <div className="space-y-6">
-                {/* Dimensões */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Largura: {width}px
@@ -181,8 +186,6 @@ export default function ImageResizer() {
                     className="w-full h-2 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
-
-                {/* Manter proporção */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -194,8 +197,6 @@ export default function ImageResizer() {
                     Manter proporção
                   </label>
                 </div>
-
-                {/* Qualidade */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Qualidade: {quality}%
@@ -209,8 +210,6 @@ export default function ImageResizer() {
                     className="w-full h-2 bg-gradient-to-r from-green-200 to-blue-200 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
-
-                {/* Formato */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Formato de Saída
@@ -226,8 +225,6 @@ export default function ImageResizer() {
                     <option value="gif">GIF</option>
                   </select>
                 </div>
-
-                {/* Rotação */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Rotação
@@ -237,15 +234,17 @@ export default function ImageResizer() {
                       <button
                         key={deg}
                         onClick={() => setRotation(deg)}
-                        className={`flex-1 py-2 rounded-lg font-medium transition-all ${rotation === deg ? "bg-purple-600 text-white shadow-lg scale-105" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                        className={`flex-1 py-2 rounded-lg font-medium transition-all ${
+                          rotation === deg
+                            ? "bg-purple-600 text-white shadow-lg scale-105"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
                       >
                         {deg}°
                       </button>
                     ))}
                   </div>
                 </div>
-
-                {/* Filtros */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -255,8 +254,6 @@ export default function ImageResizer() {
                   />
                   <label className="text-sm font-medium">Preto e Branco</label>
                 </div>
-
-                {/* Botão Processar */}
                 <button
                   onClick={processImage}
                   disabled={loading}
@@ -264,8 +261,7 @@ export default function ImageResizer() {
                 >
                   {loading ? (
                     <span className="flex items-center justify-center gap-2">
-                      <span className="animate-spin">⚙️</span>
-                      Processando...
+                      <span className="animate-spin">⚙️</span> Processando...
                     </span>
                   ) : (
                     "🚀 Processar Imagem"
