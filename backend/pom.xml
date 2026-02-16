@@ -38,11 +38,12 @@
         </dependency>
 
         <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+     <dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.30</version> <!-- adicione a versão -->
+    <scope>provided</scope>     <!-- recomendado em APIs -->
+</dependency>
 
         <!-- Thumbnailator - Processamento de Imagens -->
         <dependency>

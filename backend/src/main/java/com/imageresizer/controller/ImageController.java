@@ -25,7 +25,6 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping("/api/images")
-@CrossOrigin(origins = "*")
 @Tag(name = "Image Processing", description = "Endpoints para redimensionamento e otimização de imagens")
 public class ImageController {
 
